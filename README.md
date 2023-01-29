@@ -1,5 +1,14 @@
 # ASPNET-Core5-MVC
-Sistema de Control de Ingresos y Gastos - Full-Stack Web con .Net 5, web Application (MVC), Bootstrap, SQL Server y Entity Framework Core.
+Sistema de Control de Ingresos y Gastos - Full-Stack Web
+
+## Tecnologias
+- ASP.NET Core 6
+- Web Application (MVC)
+- Bootstrap
+- SQL Server
+- Entity Framework Core.
+
+Aplicacion web de ASP.NET MVC: C#/Windows/Web
 
 ** Contenido
 - Interacciones Front-End y Back-End

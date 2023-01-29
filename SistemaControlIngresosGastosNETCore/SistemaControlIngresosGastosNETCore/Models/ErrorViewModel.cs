@@ -1,4 +1,4 @@
-namespace SistemaControlIngresosGastosNETCore.Models
+namespace ControlIngresosGastosNETCore.Models
 {
     public class ErrorViewModel
     {

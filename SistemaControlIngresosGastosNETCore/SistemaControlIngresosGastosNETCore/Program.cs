@@ -1,4 +1,4 @@
-namespace SistemaControlIngresosGastosNETCore
+namespace ControlIngresosGastosNETCore
 {
     public class Program
     {

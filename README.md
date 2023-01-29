@@ -20,3 +20,5 @@ Aplicacion web de ASP.NET MVC: C#/Windows/Web
 - AspNet Core
 
 
+
+Archivos estaticos en: wwwroot/

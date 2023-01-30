@@ -46,6 +46,24 @@ namespace IngresosGastos.Migrations
 
                     b.ToTable("Categorias");
                 });
+
+            modelBuilder.Entity("IngresosGastos.Models.CategoriaTipo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoriaTipo");
+                });
 #pragma warning restore 612, 618
         }
     }

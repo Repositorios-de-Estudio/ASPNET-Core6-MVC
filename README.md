@@ -1,12 +1,16 @@
 # ASPNET-Core5-MVC
 Sistema de Control de Ingresos y Gastos - Full-Stack Web. Tiene conexión a la BD manual/por archivo.
 
+Se pueden ver, crea datos de tipo Ingreso o Gasto por medio de una lista desplegable con codigo quemado.
+se reemplaza texto para mostrar otro texto en la vista. IN = Ingreso, GA = Gasto. 
+Se usan plantillas Boostrap.
+
 ## Tecnologias
-- ASP.NET Core 6
+- ASP.NET Core: **6.0**
 - Web Application (MVC)
-- Bootstrap
-- SQL Server
-- Entity Framework Core.
+- Bootstrap: **v5.1.0**
+- SQL Server: **2019**
+- Entity Framework Core: **7.0.2**
 
 Aplicacion web de ASP.NET MVC: C#/Windows/Web, desde codigo se agrega el StringConnection a la BD y se crea la BD para el proyecto.
 
@@ -19,13 +23,14 @@ Aplicacion web de ASP.NET MVC: C#/Windows/Web, desde codigo se agrega el StringC
 - Back-End y Front-End Debugging
 - AspNet Core
 
-Archivos estaticos en: wwwroot/
+Archivos estaticos en: "wwwroot/"
 
 
-El primero controlador y vista que se ejecutan son:
+El primer controlador y vista que se ejecutan son:
+Version de Boostrap: "...\IngresosGastos\wwwroot\lib\bootstrap\dist\css\bootstrap.css"
 
 ```
-public class Program
+	public class Program
     {
 	...
 		app.MapControllerRoute()
@@ -33,10 +38,18 @@ public class Program
 	}
 ```
 
+## Instalar NuGet
+
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.Tools (convierte modelos a tablas)
 
 **Models/Categoria.cs**
-
 ```
+    public class Categoria
+    {
+        // estas anotaciones sirven para cuando se cree la BD y tabla Categoria se usen como campos de la tabla
         [Key]
         public int Id { get; set; }
 
@@ -52,6 +65,23 @@ public class Program
 
         [Required]
         public bool Estado { get; set; }
+    }
+```
+
+**Models/CategoriaTipo.cs**
+```
+    public class CategoriaTipo
+    {
+        // para mostrar el DropDownList: Ingreso, Gasto
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(10)]
+        [Display(Name = "Tipo")]
+        public string Tipo { get; set; } // Ingreso o Gasto
+
+    }
 ```
 
 ## Datos DB y conexión
@@ -61,6 +91,7 @@ Conexión BD: appsettings.json
 Se creara una DB llamada: IngresoGastosDB 
 
 Se creara la tabla: Categorias
+Se creara la tabla: CategoriaTipo
 
 Datos BD:
 ```
@@ -81,14 +112,6 @@ ConnectionStrings usado:
     "ConexionBD": "Server=192.168.0.20\\SERVER\\SQLEXPRESS,1433;Database=IngresoGastosDB;User Id=bduserX;Password=admin1234;Trust Server Certificate=true;"
   },
 ```
-
-## Instalar NuGet
-
-- Microsoft.EntityFrameworkCore
-- Microsoft.EntityFrameworkCore.SqlServer
-- Microsoft.EntityFrameworkCore.Design
-- Microsoft.EntityFrameworkCore.Tools (convierte modelos a tablas)
-
 
 Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
 ```
@@ -112,6 +135,9 @@ Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
         }
 
         public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<CategoriaTipo> CategoriaTipo { get; }
+
+
     }
 ```
 
@@ -120,7 +146,7 @@ Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
 
 
 **Program.cs**
-En la ultima linea de la seccion // Add services to the container. agregar:
+En la ultima linea de la seccion *// Add services to the container.* agregar:
 ```
 var connectionString = builder.Configuration.GetConnectionString("ConexionBD");
 builder.Services.AddDbContext<AppDBContext>(x => x.UseSqlServer(connectionString));
@@ -134,8 +160,124 @@ add-migration MigracionCategoria
 update-database
 ```
 
-**Se creará la BD especificada y la tabla Categorias**
+**Se creará la BD especificada y las tablas Categorias, CategoriaTipo**
+
+
+
+## Controladores
+
+Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Framework
+- Clase: Categoria (de controllers/models)
+- Categoria: AppDBContext (de data/in)
+- Generar vistas, referencias, usar pagina de diseño
+	- diseño: views/shared/_Layout.cshtml
+- Nombre: CategoriasController	
+- *Vista index creada:* **Views/Categorias/Index.cshtml**
+
+Crear **Models/CategoriaTipoesController.cs** Controlador MVC con vistas Entity Framework
+- Clase: CategoriaTipo (de controllers/models)
+- Categoria: AppDBContext (de data/in)
+- Generar vistas, referencias, usar pagina de diseño
+	- diseño: views/shared/_Layout.cshtml
+- Nombre: CategoriasController	
+- *Vista index creada:* **Views/CategoriaTipoes/Index.cshtml**
+
+## Mostrar vista creada
+Agregar en CategoriasController **Views/Shared/_Layout** vista de **CategoriasController**
+```
+...
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+<ul class="navbar-nav flex-grow-1">
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+	</li>
+	 <li class="nav-item">
+	   <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	</li>
+</ul>
+</div>
+```
+
+## Cambiado diseño con Boostrap y añadiendoo DropDownList
+
+### Llenar un DROPDOWNLIST
+**Views/Categorias/Index**
+Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
+```
+<td>
+	@* @Html.DisplayFor(modelItem => item.Tipo) *@
+	@if (item.Tipo=="IN")
+		{
+			<p>Ingreso</p>
+		}
+		else
+		{
+			<p>Egreso</p>
+		}
+</td>
+```
+
+**Views/Categorias/Index**
+Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
+```
+<td>
+	@* @Html.DisplayFor(modelItem => item.Estado) *@
+	@if (item.Estado)
+		{
+			<p>Activo</p>
+		}
+		else
+		{
+			<p>Inactivo</p>
+		}
+</td>
+```
+
+### Llenar un DROPDOWNLIST
+**Views/Categorias/Create**
+Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado.
+```
+<div class="form-group">
+	<label asp-for="Tipo" class="control-label"></label>
+	@*<input asp-for="Tipo" class="form-control" />*@
+	<select asp-for="Tipo" class="form-control">
+		<option value="IN">Ingreso</option>
+		<option value="GA">Gasto</option>
+	</select>
+	<span asp-validation-for="Tipo" class="text-danger"></span>
+</div>
+```
+Quitar "form-check", reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar "<select asp-for="Estado">" y las opciones Activo, Inactivo.
+
+```
+@*
+<div class="form-group form-check">
+	 <label class="form-check-label">
+		<input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+	</label>
+</div>
+*@
+<div class="form-group">
+	<label class="control-label">Estado</label>
+	<select asp-for="Estado" class="form-control">
+		<option value=true>Activo</option>
+		<option value=false>Inactivo</option>
+	</select>
+</div>
+````
+
+
+### Cambiando diseño con Boostrap
+En **Views/Categorias/Index** agregar clases de Boostrap
+
+Evitar que se autocompleten los campos input agregando `autocomplete="off"`
 
 
 
 
+# Creditos:
+Basado en el curso: [Desarrollo Web en ASP.NET CORE 5 (2021)](https://www.udemy.com/course/desarrollo-web-en-aspnet-core-5-2021/)
+[Boostrap 5.1 Componentes](https://getbootstrap.com/docs/5.1/components/buttons/)

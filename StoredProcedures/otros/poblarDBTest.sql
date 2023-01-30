@@ -1,0 +1,54 @@
+-- poblar BD
+
+EXEC PInsert @Name = 'Amy Obrien', @Mail = 'Amy-Obrien@maitest.com';
+EXEC PInsert @Name = 'Jaelyn Melendez', @Mail = 'Jaelyn-Melendez@maitest.com';
+EXEC PInsert @Name = 'Nikolai Farley', @Mail = 'Nikolai-Farley@maitest.com';
+EXEC PInsert @Name = 'Kasey Hall', @Mail = 'Kasey-Hall@maitest.com';
+EXEC PInsert @Name = 'Abbigail Schneider', @Mail = 'Abbigail-Schneider@maitest.com';
+EXEC PInsert @Name = 'Myla Jones', @Mail = 'Myla-Jones@maitest.com';
+EXEC PInsert @Name = 'Nathen Figueroa', @Mail = 'Nathen-Figueroa@maitest.com';
+EXEC PInsert @Name = 'Armando Bond', @Mail = 'Armando-Bond@maitest.com';
+EXEC PInsert @Name = 'Hayden Juarez', @Mail = 'Hayden-Juarez@maitest.com';
+EXEC PInsert @Name = 'Camryn Fuller', @Mail = 'Camryn-Fuller@maitest.com';
+EXEC PInsert @Name = 'Quinn Fox', @Mail = 'Quinn-Fox@maitest.com';
+EXEC PInsert @Name = 'Tripp Arroyo', @Mail = 'Tripp-Arroyo@maitest.com';
+EXEC PInsert @Name = 'Rory Morrow', @Mail = 'Rory-Morrow@maitest.com';
+EXEC PInsert @Name = 'Avah Salazar', @Mail = 'Avah-Salazar@maitest.com';
+EXEC PInsert @Name = 'Issac Collins', @Mail = 'Issac-Collins@maitest.com';
+EXEC PInsert @Name = 'Ashton Parrish', @Mail = 'Ashton-Parrish@maitest.com';
+EXEC PInsert @Name = 'Nyasia Romero', @Mail = 'Nyasia-Romero@maitest.com';
+EXEC PInsert @Name = 'Isis Patel', @Mail = 'Isis-Patel@maitest.com';
+EXEC PInsert @Name = 'Paisley Perez', @Mail = 'Paisley-Perez@maitest.com';
+EXEC PInsert @Name = 'Killian Hoover', @Mail = 'Killian-Hoover@maitest.com';
+EXEC PInsert @Name = 'Javier Whitney', @Mail = 'Javier-Whitney@maitest.com';
+EXEC PInsert @Name = 'Elias Bates', @Mail = 'Elias-Bates@maitest.com';
+EXEC PInsert @Name = 'Alani Nielsen', @Mail = 'Alani-Nielsen@maitest.com';
+EXEC PInsert @Name = 'Damari Dorsey', @Mail = 'Damari-Dorsey@maitest.com';
+EXEC PInsert @Name = 'Addison Harding', @Mail = 'Addison-Harding@maitest.com';
+EXEC PInsert @Name = 'Griffin Landry', @Mail = 'Griffin-Landry@maitest.com';
+EXEC PInsert @Name = 'Madalyn Spence', @Mail = 'Madalyn-Spence@maitest.com';
+EXEC PInsert @Name = 'Ella Walters', @Mail = 'Ella-Walters@maitest.com';
+EXEC PInsert @Name = 'Sofia Reid', @Mail = 'Sofia-Reid@maitest.com';
+EXEC PInsert @Name = 'Maryjane Charles', @Mail = 'Maryjane-Charles@maitest.com';
+EXEC PInsert @Name = 'Addison Pena', @Mail = 'Addison-Pena@maitest.com';
+EXEC PInsert @Name = 'Makhi Alvarez', @Mail = 'Makhi-Alvarez@maitest.com';
+EXEC PInsert @Name = 'Janiyah Vasquez', @Mail = 'Janiyah-Vasquez@maitest.com';
+EXEC PInsert @Name = 'Leroy Blackburn', @Mail = 'Leroy-Blackburn@maitest.com';
+EXEC PInsert @Name = 'Jazmyn Little', @Mail = 'Jazmyn-Little@maitest.com';
+EXEC PInsert @Name = 'Cara Hart', @Mail = 'Cara-Hart@maitest.com';
+EXEC PInsert @Name = 'Ayden Ibarra', @Mail = 'Ayden-Ibarra@maitest.com';
+EXEC PInsert @Name = 'Scarlett Wall', @Mail = 'Scarlett-Wall@maitest.com';
+EXEC PInsert @Name = 'Genesis Arellano', @Mail = 'Genesis-Arellano@maitest.com';
+EXEC PInsert @Name = 'Carlos Nash', @Mail = 'Carlos-Nash@maitest.com';
+EXEC PInsert @Name = 'German Schmidt', @Mail = 'German-Schmidt@maitest.com';
+EXEC PInsert @Name = 'Leon Meyers', @Mail = 'Leon-Meyers@maitest.com';
+EXEC PInsert @Name = 'Zane Mullen', @Mail = 'Zane-Mullen@maitest.com';
+EXEC PInsert @Name = 'Skyla Obrien', @Mail = 'Skyla-Obrien@maitest.com';
+EXEC PInsert @Name = 'Jorden Kelly', @Mail = 'Jorden-Kelly@maitest.com';
+EXEC PInsert @Name = 'Eden James', @Mail = 'Eden-James@maitest.com';
+EXEC PInsert @Name = 'Tori Friedman', @Mail = 'Tori-Friedman@maitest.com';
+EXEC PInsert @Name = 'Beatrice Rice', @Mail = 'Beatrice-Rice@maitest.com';
+EXEC PInsert @Name = 'Jaylon Randall', @Mail = 'Jaylon-Randall@maitest.com';
+EXEC PInsert @Name = 'Paisley Hurley', @Mail = 'Paisley-Hurley@maitest.com';
+
+---https://pinetools.com/es/agregar-texto-lineas

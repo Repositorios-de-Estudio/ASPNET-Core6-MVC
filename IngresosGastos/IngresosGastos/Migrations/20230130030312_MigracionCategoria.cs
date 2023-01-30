@@ -24,6 +24,19 @@ namespace IngresosGastos.Migrations
                 {
                     table.PrimaryKey("PK_Categorias", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "CategoriaTipo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tipo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoriaTipo", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -31,6 +44,9 @@ namespace IngresosGastos.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Categorias");
+
+            migrationBuilder.DropTable(
+                name: "CategoriaTipo");
         }
     }
 }

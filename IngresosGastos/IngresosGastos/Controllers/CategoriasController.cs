@@ -47,8 +47,8 @@ namespace IngresosGastos.Controllers
         // GET: Categorias/Create
         public IActionResult Create()
         {
-            //esto hace select * de CategoriaTipo y lo guarda en el back de la vista.message, pero no funciona
-            //ViewBag.message = _context.CategoriaTipo.ToListAsync();
+            //esto hace select * de NombreCategoria y lo guarda en el back de la vista.message, pero no funciona
+            //ViewBag.message = _context.NombreCategoria.ToListAsync();
             return View();
         }
 

@@ -23,7 +23,8 @@ namespace IngresosGastos.Data
         }
 
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<CategoriaTipo> CategoriaTipo { get; }
+        public DbSet<NombreCategoria> NombreCategoria { get; }
+        public DbSet<IngresoGasto> IngresoGasto { get; set; }
 
 
     }

@@ -10,86 +10,90 @@ using IngresosGastos.Models;
 
 namespace IngresosGastos.Controllers
 {
-    public class CategoriaTipoesController : Controller
+    public class IngresoGastosController : Controller
     {
         private readonly AppDBContext _context;
 
-
-        public CategoriaTipoesController(AppDBContext context)
+        public IngresoGastosController(AppDBContext context)
         {
             _context = context;
         }
 
-        // GET: CategoriaTipoes
+        // GET: IngresoGastos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CategoriaTipo.ToListAsync());
+            var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
+            return View(await appDBContext.ToListAsync());
         }
 
-        // GET: CategoriaTipoes/Details/5
+        // GET: IngresoGastos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.CategoriaTipo == null)
+            if (id == null || _context.IngresoGasto == null)
             {
                 return NotFound();
             }
 
-            var categoriaTipo = await _context.CategoriaTipo
+            var ingresoGasto = await _context.IngresoGasto
+                .Include(i => i.Categoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (categoriaTipo == null)
+            if (ingresoGasto == null)
             {
                 return NotFound();
             }
 
-            return View(categoriaTipo);
+            return View(ingresoGasto);
         }
 
-        // GET: CategoriaTipoes/Create
+        // GET: IngresoGastos/Create
         public IActionResult Create()
         {
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria");
             return View();
         }
 
-        // POST: CategoriaTipoes/Create
+        // POST: IngresoGastos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tipo")] CategoriaTipo categoriaTipo)
+        public async Task<IActionResult> Create([Bind("Id,CategoriaId,Fecha,Valor")] IngresoGasto ingresoGasto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(categoriaTipo);
+                _context.Add(ingresoGasto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(categoriaTipo);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria", ingresoGasto.CategoriaId);
+            return View(ingresoGasto);
         }
 
-        // GET: CategoriaTipoes/Edit/5
+        // GET: IngresoGastos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.CategoriaTipo == null)
+            if (id == null || _context.IngresoGasto == null)
             {
                 return NotFound();
             }
 
-            var categoriaTipo = await _context.CategoriaTipo.FindAsync(id);
-            if (categoriaTipo == null)
+            var ingresoGasto = await _context.IngresoGasto.FindAsync(id);
+            if (ingresoGasto == null)
             {
                 return NotFound();
             }
-            return View(categoriaTipo);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria", ingresoGasto.CategoriaId);
+            return View(ingresoGasto);
         }
 
-        // POST: CategoriaTipoes/Edit/5
+        // POST: IngresoGastos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo")] CategoriaTipo categoriaTipo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoriaId,Fecha,Valor")] IngresoGasto ingresoGasto)
         {
-            if (id != categoriaTipo.Id)
+            if (id != ingresoGasto.Id)
             {
                 return NotFound();
             }
@@ -98,12 +102,12 @@ namespace IngresosGastos.Controllers
             {
                 try
                 {
-                    _context.Update(categoriaTipo);
+                    _context.Update(ingresoGasto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoriaTipoExists(categoriaTipo.Id))
+                    if (!IngresoGastoExists(ingresoGasto.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +118,51 @@ namespace IngresosGastos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(categoriaTipo);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria", ingresoGasto.CategoriaId);
+            return View(ingresoGasto);
         }
 
-        // GET: CategoriaTipoes/Delete/5
+        // GET: IngresoGastos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.CategoriaTipo == null)
+            if (id == null || _context.IngresoGasto == null)
             {
                 return NotFound();
             }
 
-            var categoriaTipo = await _context.CategoriaTipo
+            var ingresoGasto = await _context.IngresoGasto
+                .Include(i => i.Categoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (categoriaTipo == null)
+            if (ingresoGasto == null)
             {
                 return NotFound();
             }
 
-            return View(categoriaTipo);
+            return View(ingresoGasto);
         }
 
-        // POST: CategoriaTipoes/Delete/5
+        // POST: IngresoGastos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.CategoriaTipo == null)
+            if (_context.IngresoGasto == null)
             {
-                return Problem("Entity set 'AppDBContext.CategoriaTipo'  is null.");
+                return Problem("Entity set 'AppDBContext.IngresoGasto'  is null.");
             }
-            var categoriaTipo = await _context.CategoriaTipo.FindAsync(id);
-            if (categoriaTipo != null)
+            var ingresoGasto = await _context.IngresoGasto.FindAsync(id);
+            if (ingresoGasto != null)
             {
-                _context.CategoriaTipo.Remove(categoriaTipo);
+                _context.IngresoGasto.Remove(ingresoGasto);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoriaTipoExists(int id)
+        private bool IngresoGastoExists(int id)
         {
-          return _context.CategoriaTipo.Any(e => e.Id == id);
+          return _context.IngresoGasto.Any(e => e.Id == id);
         }
     }
 }

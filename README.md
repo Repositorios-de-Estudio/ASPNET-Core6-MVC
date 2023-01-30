@@ -4,6 +4,7 @@ Sistema de Control de Ingresos y Gastos - Full-Stack Web. Tiene conexión a la B
 Se pueden ver, crea datos de tipo Ingreso o Gasto por medio de una lista desplegable con codigo quemado.
 se reemplaza texto para mostrar otro texto en la vista. IN = Ingreso, GA = Gasto. 
 Se usan plantillas Boostrap.
+Se agrega un ForeignKey entre dos tablas.
 
 ## Tecnologias
 - ASP.NET Core: **6.0**
@@ -13,6 +14,8 @@ Se usan plantillas Boostrap.
 - Entity Framework Core: **7.0.2**
 
 Aplicacion web de ASP.NET MVC: C#/Windows/Web, desde codigo se agrega el StringConnection a la BD y se crea la BD para el proyecto.
+
+- falta: no se pudo alimentar el dropdownlist desde una tabla
 
 ## Contenido
 - Interacciones Front-End y Back-End
@@ -68,9 +71,9 @@ Version de Boostrap: "...\IngresosGastos\wwwroot\lib\bootstrap\dist\css\bootstra
     }
 ```
 
-**Models/CategoriaTipo.cs**
+**Models/NombreCategoria.cs**
 ```
-    public class CategoriaTipo
+    public class NombreCategoria
     {
         // para mostrar el DropDownList: Ingreso, Gasto
         [Key]
@@ -89,9 +92,8 @@ Version de Boostrap: "...\IngresosGastos\wwwroot\lib\bootstrap\dist\css\bootstra
 Conexión BD: appsettings.json
 
 Se creara una DB llamada: IngresoGastosDB 
-
 Se creara la tabla: Categorias
-Se creara la tabla: CategoriaTipo
+Se creara la tabla: NombreCategoria
 
 Datos BD:
 ```
@@ -113,7 +115,7 @@ ConnectionStrings usado:
   },
 ```
 
-Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
+Agregar carpeta Data/ y clase: **Data/AppDBContext.cs** Esto solo se hace en MVC 6 porque MVC 3 tiene el *StartUp.cs*
 ```
     public class AppDBContext: DbContext
     {
@@ -135,7 +137,7 @@ Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
         }
 
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<CategoriaTipo> CategoriaTipo { get; }
+        public DbSet<NombreCategoria> NombreCategoria { get; }
 
 
     }
@@ -146,7 +148,7 @@ Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
 
 
 **Program.cs**
-En la ultima linea de la seccion *// Add services to the container.* agregar:
+En la ultima linea de la seccion *// Add services to the container.* Esto solo se hace en MVC 6 porque MVC 3 tiene el *StartUp.cs*. Agregar:
 ```
 var connectionString = builder.Configuration.GetConnectionString("ConexionBD");
 builder.Services.AddDbContext<AppDBContext>(x => x.UseSqlServer(connectionString));
@@ -156,13 +158,17 @@ Hacer migracion de datos models a bd:
 
 En visual > Herramientas > Administrador de paquetes Nuget > Consola:
 ```
-add-migration MigracionCategoria
+add-migration MigracionCategoria1
 update-database
 ```
 
-**Se creará la BD especificada y las tablas Categorias, CategoriaTipo**
+**Se creará la BD especificada y las tablas Categorias, NombreCategoria**
 
-
+Agregar datos a la tabla:
+```
+INSERT INTO NombreCategoria (Nombre) VALUES ('Ingreso');
+INSERT INTO NombreCategoria (Nombre) VALUES ('Gasto');
+```
 
 ## Controladores
 
@@ -173,14 +179,6 @@ Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Frame
 	- diseño: views/shared/_Layout.cshtml
 - Nombre: CategoriasController	
 - *Vista index creada:* **Views/Categorias/Index.cshtml**
-
-Crear **Models/CategoriaTipoesController.cs** Controlador MVC con vistas Entity Framework
-- Clase: CategoriaTipo (de controllers/models)
-- Categoria: AppDBContext (de data/in)
-- Generar vistas, referencias, usar pagina de diseño
-	- diseño: views/shared/_Layout.cshtml
-- Nombre: CategoriasController	
-- *Vista index creada:* **Views/CategoriaTipoes/Index.cshtml**
 
 ## Mostrar vista creada
 Agregar en CategoriasController **Views/Shared/_Layout** vista de **CategoriasController**
@@ -203,7 +201,7 @@ Agregar en CategoriasController **Views/Shared/_Layout** vista de **CategoriasCo
 
 ## Cambiado diseño con Boostrap y añadiendoo DropDownList
 
-### Llenar un DROPDOWNLIST
+### Llenar un DROPDOWNLIST en index
 **Views/Categorias/Index**
 Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
 ```
@@ -236,7 +234,7 @@ Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
 </td>
 ```
 
-### Llenar un DROPDOWNLIST
+### Llenar un DROPDOWNLIST en create
 **Views/Categorias/Create**
 Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado.
 ```
@@ -274,8 +272,60 @@ Quitar "form-check", reemplazar "form-check-label" por "control-label", reemplaz
 En **Views/Categorias/Index** agregar clases de Boostrap
 
 Evitar que se autocompleten los campos input agregando `autocomplete="off"`
+Agregar diseño en los inputos con etiquetas botones.
+Agregar diseño de tabla.
 
 
+## Agregar otro Modelo
+
+Para relacionar el ingreso / gasto 
+**Models/IngresoGasto**
+```
+    public class IngresoGasto
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public int CategoriaId { get; set; }
+
+        [ForeignKey("CategoriaId")]
+        public Categoria Categoria { get; set; } // Categoria de la clase/tabla Categoria
+
+        [Required]
+        [Display(Name ="Fecha")] 
+        public DateTime Fecha { get; set; } //cuando se ingreso el ingreso o gasto
+
+        [Required]
+        [Range(1,100000)] // para que siempre sea mayor que 1
+        [DisplayFormat(DataFormatString ="{0:C}")]
+        [Display(Name ="Valor")]
+        public double Valor { get; set; }
+	}
+```
+
+Ahora se agregar al contexto en: **Data/AppDBContext**
+```
+public DbSet<IngresoGasto> IngresoGasto { get; set; }
+```
+
+Hacer migracion de datos models a bd con nombre MigracionCategoria2:
+
+En visual > Herramientas > Administrador de paquetes Nuget > Consola:
+```
+add-migration MigracionCategoria2
+update-database
+```
+
+Agregar Controlador: **Controllers/IngresoGasto**
+
+Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Framework
+- Clase: IngresoGasto (de controllers/models)
+- Categoria: AppDBContext (de data/in)
+- Generar vistas, referencias, usar pagina de diseño
+	- diseño: views/shared/_Layout.cshtml
+- Nombre: IngresoGastosController	
+- *Vista index creada:* **Views/IngresoGastos/Index.cshtml**
 
 
 # Creditos:

@@ -2,9 +2,9 @@
 
 namespace IngresosGastos.Models
 {
-    public class CategoriaTipo
+    public class NombreCategoria
     {
-        // para mostrar el DropDownList: Ingreso, Gasto
+        // para mostrar el DropDownList: {Ingreso, Gasto}
         [Key]
         public int Id { get; set; }
 

@@ -317,9 +317,9 @@ add-migration MigracionCategoria2
 update-database
 ```
 
-Agregar Controlador: **Controllers/IngresoGasto**
+Agregar Controlador: **Controllers/IngresoGastos**
 
-Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Framework
+Crear **Models/IngresoGastos.cs** Controlador MVC con vistas Entity Framework
 - Clase: IngresoGasto (de controllers/models)
 - Categoria: AppDBContext (de data/in)
 - Generar vistas, referencias, usar pagina de diseño

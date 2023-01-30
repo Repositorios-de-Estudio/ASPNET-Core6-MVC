@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IngresosGastos.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionCategoria2 : Migration
+    public partial class MigracionCategoria1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

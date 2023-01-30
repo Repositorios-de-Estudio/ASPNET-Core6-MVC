@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IngresosGastos.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230130132746_MigracionCategoria2")]
-    partial class MigracionCategoria2
+    [Migration("20230130134211_MigracionCategoria1")]
+    partial class MigracionCategoria1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

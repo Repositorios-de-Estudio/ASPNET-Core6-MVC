@@ -13,16 +13,17 @@ namespace IngresosGastos.Models
         public int CategoriaId { get; set; }
 
         [ForeignKey("CategoriaId")]
-        public Categoria Categoria { get; set; } // Categoria de la clase/tabla Categoria
+        public Categoria Categoria { get; set; }
 
         [Required]
         [Display(Name = "Fecha")]
-        public DateTime Fecha { get; set; } //cuando se ingreso el ingreso o gasto
+        public DateTime Fecha { get; set; }
 
         [Required]
-        [Range(1, 100000)] // para que siempre sea mayor que 1
-        //[DisplayFormat(DataFormatString = "{0:C}")] //formato moneda
+        [Range(1, 100000)]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         [Display(Name = "Valor")]
         public double Valor { get; set; }
+
     }
 }

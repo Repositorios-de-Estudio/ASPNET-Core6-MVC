@@ -48,7 +48,8 @@ namespace IngresosGastos.Controllers
         // GET: IngresoGastos/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria");
+            //ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria");
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias.Where(c=>c.Estado==true), "Id", "NombreCategoria");
             return View();
         }
 

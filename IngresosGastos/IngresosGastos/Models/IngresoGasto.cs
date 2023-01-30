@@ -21,7 +21,7 @@ namespace IngresosGastos.Models
 
         [Required]
         [Range(1, 100000)] // para que siempre sea mayor que 1
-        [DisplayFormat(DataFormatString = "{0:C}")]
+        //[DisplayFormat(DataFormatString = "{0:C}")] //formato moneda
         [Display(Name = "Valor")]
         public double Valor { get; set; }
     }

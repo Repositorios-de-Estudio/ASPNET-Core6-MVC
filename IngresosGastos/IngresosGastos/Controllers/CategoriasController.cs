@@ -22,7 +22,7 @@ namespace IngresosGastos.Controllers
         // GET: Categorias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categorias.ToListAsync());
+              return View(await _context.Categorias.ToListAsync());
         }
 
         // GET: Categorias/Details/5
@@ -32,7 +32,6 @@ namespace IngresosGastos.Controllers
             {
                 return NotFound();
             }
-            
 
             var categoria = await _context.Categorias
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -47,8 +46,6 @@ namespace IngresosGastos.Controllers
         // GET: Categorias/Create
         public IActionResult Create()
         {
-            //esto hace select * de NombreCategoria y lo guarda en el back de la vista.message, pero no funciona
-            //ViewBag.message = _context.NombreCategoria.ToListAsync();
             return View();
         }
 
@@ -59,14 +56,12 @@ namespace IngresosGastos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NombreCategoria,Tipo,Estado")] Categoria categoria)
         {
-
             if (ModelState.IsValid)
             {
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
             return View(categoria);
         }
 

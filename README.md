@@ -278,7 +278,7 @@ Agregar diseño de tabla.
 
 ## Agregar otro Modelo
 
-Para relacionar el ingreso / gasto 
+Para relacionar el ingreso / gasto, Agregar Fecha y valor a los Ingresos/Gastos ya creados.
 **Models/IngresoGasto**
 ```
     public class IngresoGasto
@@ -326,6 +326,14 @@ Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Frame
 	- diseño: views/shared/_Layout.cshtml
 - Nombre: IngresoGastosController	
 - *Vista index creada:* **Views/IngresoGastos/Index.cshtml**
+
+Agregar seccion en la vista: **views/shared/_Layout**
+```
+ <li class="nav-item">
+   <a class="nav-link text-dark" asp-area="" asp-controller="IngresoGastos" asp-action="Index">Ingreso-Gastos</a>
+</li>
+```
+
 
 
 # Creditos:

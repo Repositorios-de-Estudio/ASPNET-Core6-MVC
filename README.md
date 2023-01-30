@@ -34,7 +34,7 @@ public class Program
 ```
 
 
-Models/Categoria.cs
+**Models/Categoria.cs**
 
 ```
         [Key]
@@ -54,9 +54,12 @@ Models/Categoria.cs
         public bool Estado { get; set; }
 ```
 
+## Datos DB y conexión
 
 Conexión BD: appsettings.json
+
 Se creara una DB llamada: IngresoGastosDB 
+
 Se creara la tabla: Categorias
 
 Datos BD:
@@ -66,22 +69,28 @@ DB: IngresoGastosDB
 user id: bduserX
 password: admin1234
 ```
-Plantilla standar security: `Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;`
-Plantilla trusted connection: `Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;`
+Plantilla standar security:
+`Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;`
 
+Plantilla trusted connection:
+`Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;`
+
+ConnectionStrings usado:
 ```
   "ConnectionStrings": {
-    "ConexcionBD": "Server=192.168.0.20\\SERVER\\SQLEXPRESS,1433;Database=IngresoGastosDB;User Id=bduserX;Password=admin1234;Trust Server Certificate=true;"
+    "ConexionBD": "Server=192.168.0.20\\SERVER\\SQLEXPRESS,1433;Database=IngresoGastosDB;User Id=bduserX;Password=admin1234;Trust Server Certificate=true;"
   },
 ```
-Instalar NuGet:
+
+## Instalar NuGet
+
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.SqlServer
 - Microsoft.EntityFrameworkCore.Design
 - Microsoft.EntityFrameworkCore.Tools (convierte modelos a tablas)
 
 
-Agregar carpeta Data/ y clase: Data/AppDBContext.cs
+Agregar carpeta Data/ y clase: **Data/AppDBContext.cs**
 ```
     public class AppDBContext: DbContext
     {
@@ -107,10 +116,10 @@ Agregar carpeta Data/ y clase: Data/AppDBContext.cs
 ```
 
 
-Agregar inyección de dependencias:
+## Agregar inyección de dependencias:
 
 
-Program.cs
+**Program.cs**
 En la ultima linea de la seccion // Add services to the container. agregar:
 ```
 var connectionString = builder.Configuration.GetConnectionString("ConexionBD");

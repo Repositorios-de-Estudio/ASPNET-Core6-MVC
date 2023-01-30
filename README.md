@@ -10,7 +10,7 @@ Sistema de Control de Ingresos y Gastos - Full-Stack Web. Tiene conexión a la B
 
 Aplicacion web de ASP.NET MVC: C#/Windows/Web, desde codigo se agrega el StringConnection a la BD y se crea la BD para el proyecto.
 
-** Contenido
+## Contenido
 - Interacciones Front-End y Back-End
 - Data Model con Entity Framework Core
 - Traer y Desplegar Datos
@@ -125,4 +125,8 @@ add-migration MigracionCategoria
 update-database
 ```
 
-Se creará la BD especificada y la tabla Categorias
+**Se creará la BD especificada y la tabla Categorias**
+
+
+
+

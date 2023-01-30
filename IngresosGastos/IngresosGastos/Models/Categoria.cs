@@ -5,6 +5,7 @@ namespace IngresosGastos.Models
     // Categoria ingresos o gastos
     public class Categoria
     {
+        // estas anotaciones sirven para cuando se cree la BD y tabla Categoria se usen como campos de la tabla
         [Key]
         public int Id { get; set; }
 

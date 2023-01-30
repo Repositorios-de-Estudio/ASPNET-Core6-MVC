@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ControlIngresosGastosNETCore.Models;
+﻿using IngresosGastos.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ControlIngresosGastosNETCore.Controllers
+namespace IngresosGastos.Controllers
 {
     public class HomeController : Controller
     {

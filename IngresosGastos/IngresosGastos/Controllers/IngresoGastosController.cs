@@ -65,6 +65,7 @@ namespace IngresosGastos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria", ingresoGasto.CategoriaId);
             return View(ingresoGasto);
         }

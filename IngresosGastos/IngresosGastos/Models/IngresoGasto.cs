@@ -13,7 +13,7 @@ namespace IngresosGastos.Models
         public int CategoriaId { get; set; }
 
         [ForeignKey("CategoriaId")]
-        public Categoria Categoria { get; set; }
+        public Categoria? Categoria { get; set; }
 
         [Required]
         [Display(Name = "Fecha")]

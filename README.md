@@ -334,7 +334,49 @@ Agregar seccion en la vista: **views/shared/_Layout**
 </li>
 ```
 
+***
 
+# SOLUCION DE PROBLEMAS
+
+## The Categoria field is requiered
+Cuando agregaba un **IngresoGasto** la pagina no realizaba ninguna acción. Revisé el método de *Create* para revisar si habian fallos. Por alguna razón *ModelState.IsValid* siempre era false.
+
+Usar el modo Depuración y mirar el mensaje del *ModelState*. agregar:
+```
+var errors = ModelState.Values.SelectMany(v => v.Errors);
+```
+
+Quedaría así:
+```
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,CategoriaId,Fecha,Valor")] IngresoGasto ingresoGasto)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(ingresoGasto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria", ingresoGasto.CategoriaId);
+            return View(ingresoGasto);
+        }
+```
+
+Ver mensaje en:
+*errors>vista de resultados>[0]>ErrorMessage* 
+Resultado:
+`ErrorMessage: "The Categoria field is required."`
+
+*Solución*
+Como el problema era con *Categoria* en el controlador de **IngresoGasto** coloque el parametro como opcional.
+
+```
+[ForeignKey("CategoriaId")]
+public Categoria? Categoria { get; set; }
+```
+***
 
 # Creditos:
 Basado en el curso: [Desarrollo Web en ASP.NET CORE 5 (2021)](https://www.udemy.com/course/desarrollo-web-en-aspnet-core-5-2021/)

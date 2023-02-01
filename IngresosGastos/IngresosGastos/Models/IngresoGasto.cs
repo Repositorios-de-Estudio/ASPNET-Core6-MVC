@@ -12,7 +12,8 @@ namespace IngresosGastos.Models
         [Required]
         public int CategoriaId { get; set; }
 
-        [ForeignKey("CategoriaId")]
+        //relaciona la tabla categoria con esta tabla, trae las categorias a esta tabla
+        [ForeignKey("CategoriaId")] 
         public Categoria? Categoria { get; set; }
 
         [Required]
@@ -21,7 +22,7 @@ namespace IngresosGastos.Models
 
         [Required]
         [Range(1, 10000000000)]
-        [DisplayFormat(DataFormatString = "{0:C}")]
+        [DisplayFormat(DataFormatString = "{0:C}")] //C: currency
         [Display(Name = "Valor")]
         public double Valor { get; set; }
 

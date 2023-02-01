@@ -20,9 +20,29 @@ namespace IngresosGastos.Controllers
         }
 
         // GET: IngresoGastos
-        public async Task<IActionResult> Index()
+        // Index(int? mes, int? anio) para mostrar por mes y año segun lo seleccionado en la vista
+        //public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? mesV, int? anioV)
         {
-            var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
+            //Como los parametros son opcionales pueden ser null,
+            // en caso de que lo sean se les asiga una valor
+            if (mesV == null)
+            {
+                mesV = DateTime.Now.Month;
+            }
+            if (anioV == null)
+            {
+                mesV = DateTime.Now.Year;
+            }
+
+            //se crear variables mes y anio para ser usador en la vista con ViewBag
+            ViewData["mes"] = mesV;
+            ViewData["anio"] = anioV;
+
+            //var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
+            // se agrega where para selec where mes y anio
+            var appDBContext = _context.IngresoGasto.Include(i => i.Categoria).Where(i=>i.Fecha.Month==mesV && i.Fecha.Year==anioV);
+
             return View(await appDBContext.ToListAsync());
         }
 

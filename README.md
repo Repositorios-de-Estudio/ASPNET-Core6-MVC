@@ -393,6 +393,8 @@ Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
         </dd>
 ```
 
+**Controllers/IngresoGastos**
+
 ### Cambiando diseño con Boostrap
 En **Views/Categorias/Index** agregar clases de Boostrap
 

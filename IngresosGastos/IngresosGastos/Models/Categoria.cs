@@ -11,7 +11,7 @@ namespace IngresosGastos.Models
 
         [Required]
         [MaxLength(120)]
-        [Display(Name ="Nombre Categoria")]
+        [Display(Name ="Nombre Categoria")] // asi se muestra en la vista
         public string NombreCategoria { get; set; }
 
         [Required]

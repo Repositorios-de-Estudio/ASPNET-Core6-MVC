@@ -32,12 +32,12 @@ namespace IngresosGastos.Controllers
             }
             if (anioV == null)
             {
-                mesV = DateTime.Now.Year;
+                anioV = DateTime.Now.Year;
             }
 
             //se crear variables mes y anio para ser usador en la vista con ViewBag
-            ViewData["mes"] = mesV;
-            ViewData["anio"] = anioV;
+            ViewData["mesV"] = mesV;
+            ViewData["anioV"] = anioV;
 
             //var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
             // se agrega where para selec where mes y anio

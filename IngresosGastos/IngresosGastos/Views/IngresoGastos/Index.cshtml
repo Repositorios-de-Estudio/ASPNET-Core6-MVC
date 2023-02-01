@@ -9,19 +9,27 @@
 
 @* se requiere crear un formulario para capturar el mes y anio*@
 
-<div class="row">
-<div class="col-md-4">
-    <form asp-action="index">
-        <div class="form-group">
-            <label class="control-label">Mes/Año: </label>
-            <input type="number" class="form-control text-right" name="mesV" min="1" max="12" value="@ViewBag.mesV" autocomplete="off" />
-            <input type="number" class="form-control text-right" name="anioV" value="@ViewBag.anioV" autocomplete="off" />
-            </div>
-        <div class="form-group">
-            <input type="submit" value="Filtrar por Fecha" class="btn btn-primary" />
-        </div>
-    </form>
-</div>
+<br />
+
+<form class="row g-3" asp-action="index">
+    <div class="col-auto">
+        <label>Mes</label>
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control text-right" name="mesV" min="1" max="12" value="@ViewBag.mesV" />
+    </div>
+    <div class="col-auto">
+        <label>Año</label>
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control text-right" name="anioV" min="1" max="3000" value="@ViewBag.anioV" />
+    </div>
+    <div class="col-auto">
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </div>
+</form>
+
+<br/>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>

@@ -24,26 +24,30 @@ namespace IngresosGastos.Controllers
         //public async Task<IActionResult> Index()
         public async Task<IActionResult> Index(int? mesV, int? anioV)
         {
-            //Como los parametros son opcionales pueden ser null,
-            // en caso de que lo sean se les asiga una valor
-            if (mesV == null)
-            {
-                mesV = DateTime.Now.Month;
-            }
-            if (anioV == null)
-            {
-                anioV = DateTime.Now.Year;
-            }
-
-            //se crear variables mes y anio para ser usador en la vista con ViewBag
+            //POR DEFECTO SE CARGAN DATOS NULL LO QUE MUESTRA LA VISTA CON REGISTROS DE ESTE MES Y AÑO
             ViewData["mesV"] = mesV;
             ViewData["anioV"] = anioV;
 
+            //Como los parametros son opcionales pueden ser null,
+            // en caso de que lo sean se les asiga una valor
+            if (mesV == null || anioV==null)
+            {
+                //mesV = DateTime.Now.Month;
+                //anioV = DateTime.Now.Year;
+                var appDBContextDefault = _context.IngresoGasto.Include(i => i.Categoria);
+                return View(await appDBContextDefault.ToListAsync());
+            }
+            else
+            {
+                var appDBContextBusqueda = _context.IngresoGasto.Include(i => i.Categoria).Where(i => i.Fecha.Month == mesV && i.Fecha.Year == anioV);
+                return View(await appDBContextBusqueda.ToListAsync());
+            }
+
+            //se crear variables mes y anio para ser usador en la vista con ViewBag
+            
+
             //var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
             // se agrega where para selec where mes y anio
-            var appDBContext = _context.IngresoGasto.Include(i => i.Categoria).Where(i=>i.Fecha.Month==mesV && i.Fecha.Year==anioV);
-
-            return View(await appDBContext.ToListAsync());
         }
 
         // GET: IngresoGastos/Details/5

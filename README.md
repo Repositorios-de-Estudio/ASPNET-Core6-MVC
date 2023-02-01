@@ -33,11 +33,11 @@ Aplicacion web de ASP.NET MVC: C#/Windows/Web, desde codigo se agrega el StringC
 - Back-End y Front-End Debugging
 - AspNet Core
 
-Archivos estaticos en: "wwwroot/"
+Archivos estaticos en: *wwwroot/*
 
 
 El primer controlador y vista que se ejecutan son:
-Version de Boostrap: "...\IngresosGastos\wwwroot\lib\bootstrap\dist\css\bootstrap.css"
+Version de Boostrap: *...\IngresosGastos\wwwroot\lib\bootstrap\dist\css\bootstrap.css*
 
 ```
 	public class Program
@@ -119,7 +119,7 @@ ConnectionStrings usado:
 ```
   "ConnectionStrings": {
     "ConexionBD": "Server=192.168.0.20\\SERVER\\SQLEXPRESS,1433;Database=IngresoGastosDB;User Id=bduserX;Password=admin1234;Trust Server Certificate=true;"
-  },
+},
 ```
 
 Agregar carpeta Data/ y clase: **Data/AppDBContext.cs** Esto solo se hace en MVC 6 porque MVC 3 tiene el *StartUp.cs*
@@ -163,7 +163,7 @@ builder.Services.AddDbContext<AppDBContext>(x => x.UseSqlServer(connectionString
 
 Hacer migracion de datos models a bd:
 
-En visual > Herramientas > Administrador de paquetes Nuget > Consola:
+En *visual > Herramientas > Administrador de paquetes Nuget > Consola*:
 ```
 add-migration MigracionCategoria1
 update-database
@@ -183,7 +183,7 @@ Crear **Models/CategoriasController.cs** Controlador MVC con vistas Entity Frame
 - Clase: Categoria (de controllers/models)
 - Categoria: AppDBContext (de data/in)
 - Generar vistas, referencias, usar pagina de diseño
-	- diseño: views/shared/_Layout.cshtml
+	- diseño: *views/shared/_Layout.cshtml*
 - Nombre: CategoriasController	
 - *Vista index creada:* **Views/Categorias/Index.cshtml**
 
@@ -241,7 +241,7 @@ public DbSet<IngresoGasto> IngresoGasto { get; set; }
 
 Hacer migracion de datos models a bd con nombre MigracionCategoria2:
 
-En visual > Herramientas > Administrador de paquetes Nuget > Consola:
+En *visual > Herramientas > Administrador de paquetes Nuget > Consola*:
 ```
 add-migration MigracionCategoria2
 update-database
@@ -253,7 +253,7 @@ Crear **Models/IngresoGastos.cs** Controlador MVC con vistas Entity Framework
 - Clase: IngresoGasto (de controllers/models)
 - Categoria: AppDBContext (de data/in)
 - Generar vistas, referencias, usar pagina de diseño
-	- diseño: views/shared/_Layout.cshtml
+	- diseño: *views/shared/_Layout.cshtml*
 - Nombre: IngresoGastosController	
 - *Vista index creada:* **Views/IngresoGastos/Index.cshtml**
 
@@ -269,7 +269,7 @@ Agregar seccion en la vista: **views/shared/_Layout**
 
 ### Llenar un DROPDOWNLIST en index
 **Views/Categorias/Index**
-Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
+Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de `@foreach`
 ```
             <td>
                 @* @Html.DisplayFor(modelItem => item.Tipo) *@
@@ -285,7 +285,7 @@ Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
 ```
 
 **Views/Categorias/Index**
-Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
+Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de `@foreach`
 ```
             <td>
 	            @* @Html.DisplayFor(modelItem => item.Estado) *@
@@ -305,7 +305,7 @@ Filtrar Categorias en IngresoGasto para mostrar solo Categorias Activas:
 *//GET de Create()* del controller, agregar `.Where(var => var.Estado==true)` en la conexion a la BD de Categorias.
 
 ```
-// GET: IngresoGastos/Create
+		// GET: IngresoGastos/Create
         public IActionResult Create()
         {
             //filtrar solo por categorias Activas
@@ -317,7 +317,8 @@ Filtrar Categorias en IngresoGasto para mostrar solo Categorias Activas:
 
 ### Llenar un DROPDOWNLIST en create
 **Views/Categorias/Create**
-Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado. Quitar <input> y agregar <select>
+Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de `<form asp-action="Create">` de Tipo y Estado. Quitar` <input>` y agregar `<select>`
+
 ```
 <div class="form-group">
 	<label asp-for="Tipo" class="control-label"></label>
@@ -329,8 +330,9 @@ Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo q
 	<span asp-validation-for="Tipo" class="text-danger"></span>
 </div>
 ```
+
 **Views/Categorias/Create**
-Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar luego del </label>: <select>
+Quitar `form-check`. En `<label>` reemplazar `form-check-label` por `control-label`, reemplazar todo el `<input>` por Estado, luego del final del `</label>` agregar `<select>`
 
 ```
 <div class="form-group">
@@ -340,9 +342,10 @@ Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label
 		<option value=false>Inactivo</option>
 	</select>
 </div>
-````
+```
 **Views/Categorias/Edit**
-Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado. Quitar <input> y agregar <select>
+Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de `<form asp-action="Create">` de Tipo y Estado. Quitar `<input>` y agregar `<select>`
+
 ```
 <div class="form-group">
 	<label asp-for="Tipo" class="control-label"></label>
@@ -354,8 +357,9 @@ Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo q
 	<span asp-validation-for="Tipo" class="text-danger"></span>
 </div>
 ```
+
 **Views/Categorias/Edit**
-Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar luego del </label>: <select>
+Quitar `form-check` en `<label>` reemplazar `form-check-label` por `control-label`, reemplazar todo el `<input>` por Estado, luego del `</label>` agregar `<select>`
 
 ```
 <div class="form-group">
@@ -365,10 +369,11 @@ Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label
 		<option value=false>Inactivo</option>
 	</select>
 </div>
-````
+```
 
 **Views/Categorias/Details**
-Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
+Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de `@foreach`
+
 ```
         <dd class = "col-sm-10">
             @* @Html.DisplayFor(model => model.Tipo)*@
@@ -384,7 +389,8 @@ Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
 ```
 
 **Views/Categorias/Details**
-Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
+Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de `@foreach`
+
 ```
         <dd class = "col-sm-10">
             @*@Html.DisplayFor(model => model.Estado)*@
@@ -403,11 +409,17 @@ Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
 
 En el controlador se modifica el metodo de la vista, en este caso `Index()` y se agregan parametros (opcionales porque pueden ser null) que enviará la vista `Index(int? mesV, int? anioV)`.
 
-Se agregan los valores de los parametros a variables locales:
-- ViewData["mesV"] = mesV;
-- ViewData["anioV"] = anioV;
+Se agregan los valores de los parametros a variables locales en back:
+- `ViewData["mesV"] = mesV;`
+- `ViewData["anioV"] = anioV;`
 
-Luego se agrega la logica, cuando alguno de los datos es null retorna *appDBContext* que viene por defecto, en caso contrario se agrega el *WHERE fecha=anioV AND mes=mesV* y se retorna *appDBContext*.
+Nombre atributos de la vista:
+- `name=mesV`
+- `name=anioV`
+
+**NOTA:** *Ambos pares de variables deben llamarse igual en Back y en front*
+
+Luego se agrega la logica, cuando alguno de los datos es null retorna *appDBContext* que viene por defecto, en caso contrario se agrega el `WHERE fecha=anioV AND mes=mesV` y se retorna *appDBContext*.
 
 
 
@@ -435,7 +447,7 @@ public async Task<IActionResult> Index(int? mesV, int? anioV)
 ```
 
 **Views/IngresoGastos/Index**
-Se agregan los input para mes y año. Se guarda el valor en name="anioV", mes="mesV" y se envia su valor al back. El valor de las variables se cambia segun envie value="@ViewBag.mesV" y value="@ViewBag.anioV".
+Se agregan los input para mes y año. Se guarda el valor en `name="anioV"`, `mes="mesV"` y se envia su valor al back. El valor de las variables se cambia segun envie `value="@ViewBag.mesV"` y `value="@ViewBag.anioV"`.
 ```
 <form class="row g-3" asp-action="index">
     <div class="col-auto">
@@ -473,7 +485,7 @@ Agregar diseño de tabla:
 # SOLUCION DE PROBLEMAS
 
 ## The Categoria field is requiered
-Cuando agregaba un **IngresoGasto** la pagina no realizaba ninguna acción. Revisé el método de *Create* para revisar si habian fallos. Por alguna razón *ModelState.IsValid* siempre era false.
+Cuando agregaba un **IngresoGasto** la pagina no realizaba ninguna acción. Revisé el método de `Create()` del controlador para revisar si habian fallos. Por alguna razón `ModelState.IsValid` siempre era false.
 
 Usar el modo Depuración y mirar el mensaje del *ModelState*. agregar:
 ```

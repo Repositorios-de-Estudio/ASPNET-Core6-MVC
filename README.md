@@ -514,7 +514,7 @@ public Categoria? Categoria { get; set; }
 - Enviar datos de back a front
 	- En el controller usar ViewData["NombreVar"] = .... y en la vista usarlo como "asp-for="CategoriaId" ... asp-items="ViewBag.NombreVar"
 - Se pueden cambiar los atributes de un texto que se mnuestra en html colocandolo dentro de una etqiqueta <p></p>
-- 
+- Recrear el proyecto, eliminar Migration y ejecutar: `add-migration MigracionCategoria2` y `update-database`
 
 
 # Creditos:

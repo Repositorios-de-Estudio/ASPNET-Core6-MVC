@@ -1,8 +1,15 @@
 # ASPNET-Core5-MVC
+
+Curso visto en NetCore 3 y hehco en NetCore6
+
+Curso: [Desarrollo Web en ASP.NET CORE 5 (2021)](https://www.udemy.com/course/desarrollo-web-en-aspnet-core-5-2021/)
+
+### curso terminado 
 Sistema de Control de Ingresos y Gastos - Full-Stack Web. Tiene conexión a la BD manual/por archivo.
 
 Se pueden ver, crea datos de tipo Ingreso o Gasto por medio de una lista desplegable con codigo quemado.
-se reemplaza texto para mostrar otro texto en la vista. IN = Ingreso, GA = Gasto. 
+Se reemplaza texto para mostrar otro texto en la vista. IN = Ingreso, GA = Gasto. 
+Se creo filtro para buscar por año y mes.
 Se usan plantillas Boostrap.
 Se agrega un ForeignKey entre dos tablas.
 

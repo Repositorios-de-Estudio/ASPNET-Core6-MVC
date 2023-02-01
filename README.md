@@ -1,6 +1,6 @@
 # ASPNET-Core5-MVC
 
-Curso visto en NetCore 3 y hehco en NetCore6
+Curso visto en NetCore 3 y hecho en NetCore6
 
 Curso: [Desarrollo Web en ASP.NET CORE 5 (2021)](https://www.udemy.com/course/desarrollo-web-en-aspnet-core-5-2021/)
 

@@ -20,34 +20,36 @@ namespace IngresosGastos.Controllers
         }
 
         // GET: IngresoGastos
-        // Index(int? mes, int? anio) para mostrar por mes y año segun lo seleccionado en la vista
+        // Index(int? mes, int? anio) Mostrar resultados del Index por defecto o por mes y año segun lo seleccionado en la vista,
+        // si alguno de los valores son *null* restorna la vista por defecto (muestra los datos sin filtrar).
         //public async Task<IActionResult> Index()
         public async Task<IActionResult> Index(int? mesV, int? anioV)
         {
             //POR DEFECTO SE CARGAN DATOS NULL LO QUE MUESTRA LA VISTA CON REGISTROS DE ESTE MES Y AÑO
+
+            //se crear variables mes y anio para ser usador en la vista con ViewBag
             ViewData["mesV"] = mesV;
             ViewData["anioV"] = anioV;
 
             //Como los parametros son opcionales pueden ser null,
-            // en caso de que lo sean se les asiga una valor
             if (mesV == null || anioV==null)
             {
                 //mesV = DateTime.Now.Month;
                 //anioV = DateTime.Now.Year;
+                //si alguno en null entonces carga todos los resultados
                 var appDBContextDefault = _context.IngresoGasto.Include(i => i.Categoria);
                 return View(await appDBContextDefault.ToListAsync());
             }
             else
             {
+                // se agrega where para selec where mes y anio
                 var appDBContextBusqueda = _context.IngresoGasto.Include(i => i.Categoria).Where(i => i.Fecha.Month == mesV && i.Fecha.Year == anioV);
                 return View(await appDBContextBusqueda.ToListAsync());
             }
 
-            //se crear variables mes y anio para ser usador en la vista con ViewBag
-            
 
             //var appDBContext = _context.IngresoGasto.Include(i => i.Categoria);
-            // se agrega where para selec where mes y anio
+            //return View(await appDBContextDefault.ToListAsync());
         }
 
         // GET: IngresoGastos/Details/5

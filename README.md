@@ -360,7 +360,6 @@ Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label
 </div>
 ````
 
-asdad
 **Views/Categorias/Details**
 Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
 ```
@@ -393,7 +392,62 @@ Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
         </dd>
 ```
 
+### Filtrar resultados por mes y año 
+
+En el controlador se modifica el metodo de la vista, en este caso `Index()` y se agregan parametros (opcionales porque pueden ser null) que enviará la vista `Index(int? mesV, int? anioV)`.
+
+Se agregan los valores de los parametros a variables locales:
+- ViewData["mesV"] = mesV;
+- ViewData["anioV"] = anioV;
+
+Luego se agrega la logica, cuando alguno de los datos es null retorna *appDBContext* que viene por defecto, en caso contrario se agrega el *WHERE fecha=anioV AND mes=mesV* y se retorna *appDBContext*.
+
+
+
 **Controllers/IngresoGastos**
+Mostrar resultados del Index por defecto o por mes y año segun lo seleccionado en la vista, si alguno de los valores son *null* restorna la vista por defecto (muestra los datos sin filtrar).
+
+```
+public async Task<IActionResult> Index(int? mesV, int? anioV)
+        {
+            ViewData["mesV"] = mesV;
+            ViewData["anioV"] = anioV;
+
+            if (mesV == null || anioV==null)
+            {
+                var appDBContextDefault = _context.IngresoGasto.Include(i => i.Categoria);
+                return View(await appDBContextDefault.ToListAsync());
+            }
+            else
+            {
+                var appDBContextBusqueda = _context.IngresoGasto.Include(i => i.Categoria).Where(i => i.Fecha.Month == mesV && i.Fecha.Year == anioV);
+                return View(await appDBContextBusqueda.ToListAsync());
+            }
+        }
+
+```
+
+**Views/IngresoGastos/Index**
+Se agregan los input para mes y año. Se guarda el valor en name="anioV", mes="mesV" y se envia su valor al back. El valor de las variables se cambia segun envie value="@ViewBag.mesV" y value="@ViewBag.anioV".
+```
+<form class="row g-3" asp-action="index">
+    <div class="col-auto">
+        <label>Mes</label>
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control text-right" name="mesV" min="1" max="12" value="@ViewBag.mesV" />
+    </div>
+    <div class="col-auto">
+        <label>Año</label>
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control text-right" name="anioV" min="1" max="3000" value="@ViewBag.anioV" />
+    </div>
+    <div class="col-auto">
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </div>
+</form>
+```
 
 ### Cambiando diseño con Boostrap
 En **Views/Categorias/Index** agregar clases de Boostrap

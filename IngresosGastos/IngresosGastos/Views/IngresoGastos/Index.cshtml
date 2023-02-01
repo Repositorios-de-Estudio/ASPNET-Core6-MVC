@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de Ingresos & Gastos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-striped">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
@@ -35,12 +35,21 @@
                 @Html.DisplayFor(modelItem => item.Fecha)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Valor)
+               @*  @Html.DisplayFor(modelItem => item.Valor) *@
+                    @if (item.Categoria.Tipo == "IN")
+                    {
+                        <p class="text-primary text-right">@Html.DisplayFor(modelItem => item.Valor)</p>
+                    }
+                    else
+                    {
+                        <p class="text-danger text-right">@Html.DisplayFor(modelItem => item.Valor)</p>
+                    }
+                    @*texto que cambiar de color con el tipo GA o IN, y justificado a la derecha*@
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

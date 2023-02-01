@@ -20,7 +20,7 @@ namespace IngresosGastos.Models
         public DateTime Fecha { get; set; }
 
         [Required]
-        [Range(1, 100000)]
+        [Range(1, 10000000000)]
         [DisplayFormat(DataFormatString = "{0:C}")]
         [Display(Name = "Valor")]
         public double Valor { get; set; }

@@ -199,83 +199,6 @@ Agregar en CategoriasController **Views/Shared/_Layout** vista de **CategoriasCo
 </div>
 ```
 
-## Cambiado diseño con Boostrap y añadiendoo DropDownList
-
-### Llenar un DROPDOWNLIST en index
-**Views/Categorias/Index**
-Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
-```
-<td>
-	@* @Html.DisplayFor(modelItem => item.Tipo) *@
-	@if (item.Tipo=="IN")
-		{
-			<p>Ingreso</p>
-		}
-		else
-		{
-			<p>Egreso</p>
-		}
-</td>
-```
-
-**Views/Categorias/Index**
-Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
-```
-<td>
-	@* @Html.DisplayFor(modelItem => item.Estado) *@
-	@if (item.Estado)
-		{
-			<p>Activo</p>
-		}
-		else
-		{
-			<p>Inactivo</p>
-		}
-</td>
-```
-
-### Llenar un DROPDOWNLIST en create
-**Views/Categorias/Create**
-Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado.
-```
-<div class="form-group">
-	<label asp-for="Tipo" class="control-label"></label>
-	@*<input asp-for="Tipo" class="form-control" />*@
-	<select asp-for="Tipo" class="form-control">
-		<option value="IN">Ingreso</option>
-		<option value="GA">Gasto</option>
-	</select>
-	<span asp-validation-for="Tipo" class="text-danger"></span>
-</div>
-```
-Quitar "form-check", reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar "<select asp-for="Estado">" y las opciones Activo, Inactivo.
-
-```
-@*
-<div class="form-group form-check">
-	 <label class="form-check-label">
-		<input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
-	</label>
-</div>
-*@
-<div class="form-group">
-	<label class="control-label">Estado</label>
-	<select asp-for="Estado" class="form-control">
-		<option value=true>Activo</option>
-		<option value=false>Inactivo</option>
-	</select>
-</div>
-````
-
-
-### Cambiando diseño con Boostrap
-En **Views/Categorias/Index** agregar clases de Boostrap
-
-Evitar que se autocompleten los campos input agregando `autocomplete="off"`
-Agregar diseño en los inputos con etiquetas botones.
-Agregar diseño de tabla.
-
-
 ## Agregar otro Modelo
 
 Para relacionar el ingreso / gasto, Agregar Fecha y valor a los Ingresos/Gastos ya creados.
@@ -334,6 +257,154 @@ Agregar seccion en la vista: **views/shared/_Layout**
 </li>
 ```
 
+
+## Cambiado diseño con Boostrap y añadiendoo DropDownList
+
+### Llenar un DROPDOWNLIST en index
+**Views/Categorias/Index**
+Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
+```
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Tipo) *@
+	            @if (item.Tipo=="IN")
+		            {
+                        <p class="btn btn-outline-success">Ingreso</p>
+		            }
+		            else
+		            {
+                        <p class="btn btn-outline-danger">Gasto</p>
+		            }
+            </td>
+```
+
+**Views/Categorias/Index**
+Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
+```
+            <td>
+	            @* @Html.DisplayFor(modelItem => item.Estado) *@
+	            @if (item.Estado)
+		            {
+                        <p class="btn btn-outline-primary">Activo</p>
+		            }
+		            else
+		            {
+                        <p class="btn btn-outline-info">Inactivo</p>
+		            }
+            </td>
+```
+
+## Filtrar
+Filtrar Categorias en IngresoGasto para mostrar solo Categorias Activas:
+*//GET de Create()* del controller, agregar `.Where(var => var.Estado==true)` en la conexion a la BD de Categorias.
+
+```
+// GET: IngresoGastos/Create
+        public IActionResult Create()
+        {
+            //filtrar solo por categorias Activas
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias.Where(var => var.Estado==true), "Id", "NombreCategoria");
+            //ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "NombreCategoria");
+            return View();
+        }
+```
+
+### Llenar un DROPDOWNLIST en create
+**Views/Categorias/Create**
+Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado. Quitar <input> y agregar <select>
+```
+<div class="form-group">
+	<label asp-for="Tipo" class="control-label"></label>
+	@*<input asp-for="Tipo" class="form-control" />*@
+	<select asp-for="Tipo" class="form-control">
+		<option value="IN">Ingreso</option>
+		<option value="GA">Gasto</option>
+	</select>
+	<span asp-validation-for="Tipo" class="text-danger"></span>
+</div>
+```
+**Views/Categorias/Create**
+Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar luego del </label>: <select>
+
+```
+<div class="form-group">
+	<label class="control-label">Estado</label>
+	<select asp-for="Estado" class="form-control">
+		<option value=true>Activo</option>
+		<option value=false>Inactivo</option>
+	</select>
+</div>
+````
+**Views/Categorias/Edit**
+Reemplaza texto IN, GA por una lista desplegable con Ingreso, Gasto con codigo quemado. dentro de *<form asp-action="Create">* de Tipo y Estado. Quitar <input> y agregar <select>
+```
+<div class="form-group">
+	<label asp-for="Tipo" class="control-label"></label>
+	@*<input asp-for="Tipo" class="form-control" />*@
+	<select asp-for="Tipo" class="form-control">
+		<option value="IN">Ingreso</option>
+		<option value="GA">Gasto</option>
+	</select>
+	<span asp-validation-for="Tipo" class="text-danger"></span>
+</div>
+```
+**Views/Categorias/Edit**
+Quitar "form-check". en <label> reemplazar "form-check-label" por "control-label", reemplazar todo el <input> por Estado, Agregar luego del </label>: <select>
+
+```
+<div class="form-group">
+	<label class="control-label">Estado</label>
+	<select asp-for="Estado" class="form-control">
+		<option value=true>Activo</option>
+		<option value=false>Inactivo</option>
+	</select>
+</div>
+````
+
+asdad
+**Views/Categorias/Details**
+Reemplaza texto IN, GA por Ingreso, Gasto. Seccion de @foreach
+```
+        <dd class = "col-sm-10">
+            @* @Html.DisplayFor(model => model.Tipo)*@
+            @if (Model.Tipo == "IN")
+            {
+                <p class="btn btn-outline-success">Ingreso</p>
+            }
+            else
+            {
+                <p class="btn btn-outline-danger">Gasto</p>
+            }
+        </dd>
+```
+
+**Views/Categorias/Details**
+Reemplaza casilla true/false Estado por Activo, Inactivo. Seccion de @foreach
+```
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.Estado)*@
+            @if (Model.Estado)
+            {
+                <p class="btn btn-outline-primary">Activo</p>
+            }
+            else
+            {
+                <p class="btn btn-outline-info">Inactivo</p>
+            }
+        </dd>
+```
+
+### Cambiando diseño con Boostrap
+En **Views/Categorias/Index** agregar clases de Boostrap
+
+Evitar que se autocompleten los campos input agregando `autocomplete="off"`
+Agregar diseño en los inputos con etiquetas botones.
+Agregar diseño de tabla:
+- Encabezado Tablas: <thead class="table-dark">
+- Cuerpo tablas: <table class="table table-striped">
+- Texto: class="btn btn-primary"
+
+
+
 ***
 
 # SOLUCION DE PROBLEMAS
@@ -377,6 +448,18 @@ Como el problema era con *Categoria* en el controlador de **IngresoGasto** coloq
 public Categoria? Categoria { get; set; }
 ```
 ***
+
+# Notas
+
+- la tabla de la bd se define en AppDBContext y el controller lo usa como *_context*.
+- los query de las tablas son: *_context.IngresoGasto.{query}*
+	- Select -> .Include(i=>i.categoria)
+	- Where -> .Where(i=>i.categoria.Estado==true)
+- Enviar datos de back a front
+	- En el controller usar ViewData["NombreVar"] = .... y en la vista usarlo como "asp-for="CategoriaId" ... asp-items="ViewBag.NombreVar"
+- Se pueden cambiar los atributes de un texto que se mnuestra en html colocandolo dentro de una etqiqueta <p></p>
+- 
+
 
 # Creditos:
 Basado en el curso: [Desarrollo Web en ASP.NET CORE 5 (2021)](https://www.udemy.com/course/desarrollo-web-en-aspnet-core-5-2021/)
